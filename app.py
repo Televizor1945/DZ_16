@@ -110,7 +110,7 @@ db.session.add_all([Offer(id=offer["id"], order_id=offer["order_id"], executor_i
 
 db.session.commit()
 
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users/', methods=['GET', 'POST'])
 def users():
     if request.method == 'GET':
         user_data = User.query.all()
@@ -129,11 +129,9 @@ def users():
                 }
             )
 
-        return f"vot a fuc"
 
-        # return jsonify(user_response)
+        return json.dumps([user.to_dict() for user in user_data]), 200
 
-        # return json.dumps([user.to_dict() for user in user_data]), 200
     if request.method == 'POST':
         try:
             user = json.loads(request.data)
@@ -154,7 +152,7 @@ def users():
             return e
 
 
-@app.route('/users/<int:user_id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/users/<int:user_id>/', methods=['GET', 'PUT', 'DELETE'])
 def one_user(user_id):
     if request.method == 'GET':
         user = User.query.get(user_id)
@@ -187,7 +185,7 @@ def one_user(user_id):
         return f"Объект с id {user_id} успешно удалён!", 200
 
 
-@app.route('/orders', methods=['GET', 'POST'])
+@app.route('/orders/', methods=['GET', 'POST'])
 def orders():
     if request.method == 'GET':
         order_data = Order.query.all()
@@ -216,7 +214,7 @@ def orders():
             return e
 
 
-@app.route('/orders/<int:user_id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/orders/<int:order_id>/', methods=['GET', 'PUT', 'DELETE'])
 def one_order(order_id):
     if request.method == 'GET':
         order = Order.query.get(order_id)
@@ -226,7 +224,7 @@ def one_order(order_id):
             return jsonify(order.to_dict())
 
 
-@app.route('/offers', methods=['GET', 'POST'])
+@app.route('/offers/', methods=['GET', 'POST'])
 def offers():
     if request.method == 'GET':
         offer_data = Offer.query.all()
@@ -247,7 +245,7 @@ def offers():
             return e
 
 
-@app.route('/offers/<int:user_id>', methods=['GET', 'PUT', 'DELETE'])
+@app.route('/offers/<int:offer_id>/', methods=['GET', 'PUT', 'DELETE'])
 def one_offer(offer_id):
     if request.method == 'GET':
         offer = Offer.query.get(offer_id)
